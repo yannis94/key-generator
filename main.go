@@ -3,8 +3,8 @@ package main
 import (
     "log"
     printer "key-generator/printer"
-    password "key-generator/generator/password"
-    passphrase "key-generator/generator/passphrase"
+    password "key-generator/password"
+    passphrase "key-generator/passphrase"
 )
 
 func intro() string {

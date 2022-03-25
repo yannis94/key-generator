@@ -2,6 +2,9 @@ package main
 
 import (
     "log"
+    printer "key-generator/printer"
+    password "key-generator/generator/password"
+    passphrase "key-generator/generator/passphrase"
 )
 
 func intro() string {
@@ -15,7 +18,8 @@ func main() {
     // 2. get user choice
     // 3. redirect to corresponding func
     // 4. output result
-    var intro string = intro()
+    var intro string = printer.Intro()
     log.Println(intro)
-
+    log.Printf(passphrase.Test())
+    log.Printf(password.Test())
 }

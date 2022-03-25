@@ -1,4 +1,3 @@
-module github.com/yannis94/key-generator
+module key-generator
 
 go 1.18
-

@@ -21,7 +21,7 @@ func main() {
         result := password.Generate(userConfig)
         log.Print(result)
     } else if choice == "2" {
-        log.Printf(passphrase.Test())
+        log.Printf(passphrase.Generate())
     } else {
         log.Printf("Quitting, bye")
     }

@@ -33,10 +33,10 @@ func AskChoice() string {
 
     answerValid := false
     var userChoice string
-    var choices string = "\n\n[1] Password / key\n[2] Passphrase\n[q] Quit"
+    var menu string = "\n\n[1] Password / key\n[2] Passphrase\n[q] Quit"
     mypointer := &userChoice
     
-    log.Println(choices)
+    log.Println(menu)
     
     for !answerValid {
         reader := bufio.NewReader(os.Stdin)
@@ -53,7 +53,7 @@ func AskChoice() string {
                 answerValid = true
             default: 
                 log.Println("This choice doen't exist.")
-                log.Println(choices)
+                log.Println(menu)
         }
 
         *mypointer = choice

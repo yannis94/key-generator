@@ -48,7 +48,7 @@ func getStringInput(question string, acceptedValue []string, r *bufio.Reader) st
 
     for !answerValid {
         log.Print(question)
-        log.Print("Your choice >")
+        log.Print("\nYour choice >")
         input, err := r.ReadString('\n')
 
         if err != nil {
@@ -68,7 +68,6 @@ func getStringInput(question string, acceptedValue []string, r *bufio.Reader) st
             }
         }
     }
-    log.Print("response : " + response)
 
     return response
 }
@@ -105,6 +104,15 @@ func SetPasswordConfiguration() map[string]int64 {
     config["letter"] = getIntInput("How many letter >", reader)
     config["number"] = getIntInput("How many digit >", reader)
     config["char"] = getIntInput("How many special character >", reader)
+
+    return config
+}
+
+func SetPassphraseConfiguration() map[string]int64 {
+    config := make(map[string]int64)
+    reader := bufio.NewReader(os.Stdin)
+
+    config["words"] = getIntInput("How many words do you need >", reader)
 
     return config
 }

@@ -21,7 +21,9 @@ func main() {
         result := password.Generate(userConfig)
         log.Print(result)
     } else if choice == "2" {
-        log.Printf(passphrase.Generate())
+        userConfig := printer.SetPassphraseConfiguration()
+        result := passphrase.Generate(userConfig)
+        log.Print(result)
     } else {
         log.Printf("Quitting, bye")
     }

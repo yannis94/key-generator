@@ -20,7 +20,7 @@ func pickRandomNtime(n int64, target string) string {
     return result
 }
 
-func getPassword(config map[string]int64) string {
+func GetPassword(config map[string]int64) string {
     letters := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     digits := "0123456789"
     char := "-_/\\|[]{}()?!.,;:'\"!@#$%^&*=+"
@@ -42,16 +42,3 @@ func getPassword(config map[string]int64) string {
     return result
 }
 
-func Generate(config map[string]int64) []string {
-    //1. ask user how many (letter, num, char)
-    //2. generate func
-    //3. return result
-    var result []string
-    var i int64
-
-    for i = 0; i < config["password"]; i++ {
-        result = append(result, getPassword(config))
-    }
-
-    return result
-}

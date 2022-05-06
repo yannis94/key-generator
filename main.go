@@ -18,8 +18,9 @@ func main() {
 
     if choice == "1" {
         userConfig := printer.SetPasswordConfiguration()
-        result := password.Generate(userConfig)
+        result := password.GetPassword(userConfig)
         log.Print(result)
+        //printer.ShowResult(result)
     } else if choice == "2" {
         userConfig := printer.SetPassphraseConfiguration()
         result := passphrase.Generate(userConfig)

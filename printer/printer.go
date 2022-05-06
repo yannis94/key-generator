@@ -100,7 +100,6 @@ func SetPasswordConfiguration() map[string]int64 {
     config := make(map[string]int64)
     reader := bufio.NewReader(os.Stdin)
 
-    //config["password"] = getIntInput("How many password to generate >", reader)
     config["letter"] = getIntInput("How many letter >", reader)
     config["number"] = getIntInput("How many digit >", reader)
     config["char"] = getIntInput("How many special character >", reader)
@@ -120,5 +119,5 @@ func SetPassphraseConfiguration() map[string]int64 {
 func ShowResult(res string) {
     log.Printf("\n------- RESULT -------\n\n")
     log.Print(res)
-    log.Printf("-------------")
+    log.Printf("\n-------------")
 }

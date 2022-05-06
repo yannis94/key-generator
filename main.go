@@ -8,10 +8,6 @@ import (
 )
 
 func main() {
-    // 1. call introduction func 
-    // 2. get user choice
-    // 3. redirect to corresponding func
-    // 4. output result
     printer.Intro()
 
     choice := printer.AskChoice()
@@ -19,12 +15,12 @@ func main() {
     if choice == "1" {
         userConfig := printer.SetPasswordConfiguration()
         result := password.GetPassword(userConfig)
-        log.Print(result)
-        //printer.ShowResult(result)
+        printer.ShowResult(result)
     } else if choice == "2" {
         userConfig := printer.SetPassphraseConfiguration()
         result := passphrase.Generate(userConfig)
-        log.Print(result)
+        printer.ShowResult(result)
+    } else if choice == "2" {
     } else {
         log.Printf("Quitting, bye")
     }

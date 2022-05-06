@@ -1,7 +1,6 @@
 package main
 
 import (
-    "log"
     printer "key-generator/printer"
     password "key-generator/password"
     passphrase "key-generator/passphrase"
@@ -20,8 +19,7 @@ func main() {
         userConfig := printer.SetPassphraseConfiguration()
         result := passphrase.Generate(userConfig)
         printer.ShowResult(result)
-    } else if choice == "2" {
     } else {
-        log.Printf("Quitting, bye")
+        printer.Quit()
     }
 }

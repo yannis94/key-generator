@@ -121,3 +121,8 @@ func ShowResult(res string) {
     log.Print(res)
     log.Printf("\n-------------")
 }
+
+func Quit() {
+    log.SetFlags(0)
+    log.Printf("\nQuitting, bye")
+}

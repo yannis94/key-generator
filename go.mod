@@ -1,3 +1,3 @@
-module key-generator
+module github.com/yannis94/key-generator
 
-go 1.18
+go 1.20

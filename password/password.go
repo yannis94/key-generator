@@ -20,7 +20,7 @@ func pickRandomNtime(n int64, target string) string {
     return result
 }
 
-func GetPassword(config map[string]int64) string {
+func Generate(config map[string]int64) string {
     letters := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     digits := "0123456789"
     char := "-_/\\|[]{}()?!.,;:'\"!@#$%^&*=+"

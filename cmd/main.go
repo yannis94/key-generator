@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/yannis94/key-generator/internal/passphrase"
 	"github.com/yannis94/key-generator/internal/password"
 )
 
@@ -16,4 +17,12 @@ func main() {
 	for i := 0; i < 10; i++ {
 		fmt.Printf("password: %s\n", pwd.Generate())
 	}
+
+	pp := passphrase.Passphrase{}
+	ppcfg := passphrase.NewPassphraseConfig(9, "wordslist.txt")
+
+	if err := pp.InitConfig(*ppcfg); err != nil {
+		panic(err)
+	}
+	fmt.Println(pp.Generate())
 }

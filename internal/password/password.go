@@ -4,6 +4,13 @@ import (
 	"fmt"
 
 	"github.com/yannis94/key-generator/internal/generator"
+	"github.com/yannis94/key-generator/pkg"
+)
+
+const (
+	_chars     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	_digits    = "0123456789"
+	_specChars = ",.<>?/|'\"@#~[]{}()-_=+$%&*"
 )
 
 type Password struct {
@@ -14,6 +21,10 @@ type PasswordConfig struct {
 	chars     int
 	digits    int
 	specChars int
+}
+
+func NewPasswordConfig(c, d, sc int) *PasswordConfig {
+	return &PasswordConfig{chars: c, digits: d, specChars: sc}
 }
 
 func (cfg PasswordConfig) Print() string {
@@ -40,5 +51,27 @@ func (p Password) PrintConfig() string {
 }
 
 func (p Password) Generate() string {
-	return ""
+	var pwd string
+
+	cfg, ok := p.config.(PasswordConfig)
+	if !ok {
+		return ""
+	}
+
+	for i := 0; i < cfg.chars; i++ {
+		idx := pkg.GetRandomNbr(0, len(_chars)-1)
+		pwd += string(_chars[idx])
+	}
+
+	for i := 0; i < cfg.digits; i++ {
+		idx := pkg.GetRandomNbr(0, len(_digits)-1)
+		pwd += string(_digits[idx])
+	}
+
+	for i := 0; i < cfg.specChars; i++ {
+		idx := pkg.GetRandomNbr(0, len(_specChars)-1)
+		pwd += string(_specChars[idx])
+	}
+
+	return pkg.ShuffleString(pwd)
 }

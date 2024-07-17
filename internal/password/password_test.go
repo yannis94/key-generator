@@ -92,3 +92,43 @@ func TestInitConfig(t *testing.T) {
 		})
 	}
 }
+
+func TestGenerate(t *testing.T) {
+	var tests = []struct {
+		name        string
+		pwdCfg      PasswordConfig
+		expectedLen int
+	}{
+		{
+			name:        "empty password config",
+			pwdCfg:      PasswordConfig{},
+			expectedLen: 0,
+		},
+		{
+			name:        "zero spec chars but no error",
+			pwdCfg:      PasswordConfig{chars: 4, digits: 2, specChars: 0},
+			expectedLen: 6,
+		},
+		{
+			name:        "classic config, no error",
+			pwdCfg:      PasswordConfig{chars: 4, digits: 2, specChars: 3},
+			expectedLen: 9,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var pwd Password
+			if err := pwd.InitConfig(tt.pwdCfg); err != nil {
+				t.Errorf("should not throw an error: %v", err)
+				return
+			}
+
+			genPwd := pwd.Generate()
+			if len(genPwd) != tt.expectedLen {
+				t.Errorf("password length generated does not match, want %d got %d", len(genPwd), tt.expectedLen)
+			}
+		})
+	}
+}

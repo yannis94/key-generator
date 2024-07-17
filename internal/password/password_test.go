@@ -50,7 +50,7 @@ func TestInitConfig(t *testing.T) {
 	var (
 		password         Password = Password{}
 		emptyPwdCfg      PasswordConfig
-		pwdNoSpecChars   = PasswordConfig{chars: 4, digits: 2, specChars: 0}
+		pwdNoSpecChars   = PasswordConfig{chars: 4, digits: 5, specChars: 0}
 		pwdWithSpecChars = PasswordConfig{chars: 4, digits: 2, specChars: 3}
 		pwdCfgErr        = PasswordConfig{chars: 4, digits: -3, specChars: 3}
 		tests            = []struct {
@@ -59,9 +59,9 @@ func TestInitConfig(t *testing.T) {
 			expected error
 		}{
 			{
-				name:     "empty password config, should not send error",
+				name:     "empty password config, should send error",
 				pwdCfg:   password.InitConfig(emptyPwdCfg),
-				expected: nil,
+				expected: errors.New("password length lower than 8"),
 			},
 			{
 				name:     "zero spec chars but no error",
@@ -98,21 +98,37 @@ func TestGenerate(t *testing.T) {
 		name        string
 		pwdCfg      PasswordConfig
 		expectedLen int
+		expectedErr error
 	}{
 		{
-			name:        "empty password config",
-			pwdCfg:      PasswordConfig{},
-			expectedLen: 0,
-		},
-		{
 			name:        "zero spec chars but no error",
-			pwdCfg:      PasswordConfig{chars: 4, digits: 2, specChars: 0},
-			expectedLen: 6,
+			pwdCfg:      PasswordConfig{chars: 4, digits: 5, specChars: 0},
+			expectedLen: 9,
+			expectedErr: nil,
 		},
 		{
 			name:        "classic config, no error",
-			pwdCfg:      PasswordConfig{chars: 4, digits: 2, specChars: 3},
-			expectedLen: 9,
+			pwdCfg:      PasswordConfig{chars: 14, digits: 2, specChars: 3},
+			expectedLen: 19,
+			expectedErr: nil,
+		},
+		{
+			name:        "length max config, no error",
+			pwdCfg:      PasswordConfig{chars: 200, digits: 52, specChars: 3},
+			expectedLen: 255,
+			expectedErr: nil,
+		},
+		{
+			name:        "length greater max config, error",
+			pwdCfg:      PasswordConfig{chars: 200, digits: 55, specChars: 3},
+			expectedLen: 0,
+			expectedErr: errors.New("max length cross"),
+		},
+		{
+			name:        "length less min config, error",
+			pwdCfg:      PasswordConfig{chars: 2, digits: 5, specChars: 0},
+			expectedLen: 0,
+			expectedErr: errors.New("min length cross"),
 		},
 	}
 
@@ -121,7 +137,9 @@ func TestGenerate(t *testing.T) {
 			t.Parallel()
 			var pwd Password
 			if err := pwd.InitConfig(tt.pwdCfg); err != nil {
-				t.Errorf("should not throw an error: %v", err)
+				if tt.expectedErr == nil {
+					t.Errorf("should not throw an error: %v", err)
+				}
 				return
 			}
 

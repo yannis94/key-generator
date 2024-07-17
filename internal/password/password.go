@@ -11,6 +11,8 @@ const (
 	_chars     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	_digits    = "0123456789"
 	_specChars = ",.<>?/|'\"@#~[]{}()-_=+$%&*"
+	_minLength = 8
+	_maxLength = 255
 )
 
 type Password struct {
@@ -40,6 +42,12 @@ func (p *Password) InitConfig(cfg PasswordConfig) error {
 	}
 	if cfg.specChars < 0 {
 		return fmt.Errorf("could not have negative number (%d) for spec character", cfg.specChars)
+	}
+	if cfg.chars+cfg.digits+cfg.specChars < _minLength {
+		return fmt.Errorf("config length less than %d", _minLength)
+	}
+	if cfg.chars+cfg.digits+cfg.specChars > _maxLength {
+		return fmt.Errorf("config length less than %d", _minLength)
 	}
 
 	p.config = cfg
